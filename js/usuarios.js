@@ -47,6 +47,7 @@ $(document).ready(function() {
             {"data": "fecha_nacimiento"},
             {"data": "direccion"},
             {"data": "ciudad"},
+            // {"data": "sucursal"},
             {"data": "rol"},
             {"data": "estado"},
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-sm btn-warning btnEditar'><i class='material-icons'>edit</i></button><button class='btn btn-sm btn-danger btnBorrar'><i class='material-icons'>delete</i></button></div></div>"}
@@ -65,6 +66,7 @@ $(document).ready(function() {
         fecha_nacimiento = $.trim($('#fecha-nacimiento').val());
         direccion = $.trim($('#direccion').val());
         ciudad = parseInt($("#ciudad").val());
+        sucursal = 0;
         username = $.trim($('#nombre-usuario').val());
         contraseña = "";
 
@@ -111,6 +113,18 @@ $(document).ready(function() {
             alert('Eliga una ciudad');
             $("#ciudad").focus();
             return false;
+        }
+
+        if(!$("#sucursal").parent().attr("hidden")){
+
+            if(parseInt($("#sucursal").val()) == 0){
+                alert('Eliga una sucursal');
+                $("#sucursal").focus();
+                return false;
+            }else{
+                sucursal = parseInt($("#sucursal").val());
+            }
+            
         }
 
         if(username == ""){
@@ -180,7 +194,7 @@ $(document).ready(function() {
           url: "../crud/crud-usuarios.php",
           type: "POST",
           datatype:"json",
-          data:  {id_persona:id_persona, id_usuario:id_usuario, nombre:nombre, apellido:apellido, correo_electronico:correo_electronico, telefono:telefono, fecha_nacimiento:fecha_nacimiento, direccion:direccion, ciudad:ciudad, username:username, contraseña:contraseña, rol:rol, estado:estado, opcion:opcion},
+          data:  {id_persona:id_persona, id_usuario:id_usuario, nombre:nombre, apellido:apellido, correo_electronico:correo_electronico, telefono:telefono, fecha_nacimiento:fecha_nacimiento, direccion:direccion, ciudad:ciudad, sucursal:sucursal, username:username, contraseña:contraseña, rol:rol, estado:estado, opcion:opcion},
           success: function(data) {
             tabla.ajax.reload(null, false);
            }
@@ -197,6 +211,7 @@ $(document).ready(function() {
         id_persona=null;
         id_usuario=null;
 
+        $("#sucursal").parent().removeAttr("hidden");
         $("#contraseña").removeAttr("hidden");
         $("#label-contraseña").removeAttr("hidden");
         $("#input-estado").attr("hidden", "hidden");
@@ -245,6 +260,23 @@ $(document).ready(function() {
               $('#ciudad').val(data);
           }
         });
+
+        /*
+        nombre_foranea = fila.find('td:eq(10)').text();
+        tabla_foranea = "sucursales";
+    
+        opcion = 5;
+        
+        $.ajax({
+          url: "../crud/crud-usuarios.php",
+          type: "POST",
+          datatype:"json",
+          data:  {opcion:opcion, tabla_foranea:tabla_foranea, nombre_foranea:nombre_foranea},
+          success: function(data) {
+              $('#sucursal').val(data);
+          }
+        });
+        */
         
         nombre_foranea = fila.find('td:eq(10)').text();
         tabla_foranea = "roles";
@@ -264,6 +296,7 @@ $(document).ready(function() {
         estado = fila.find('td:eq(11)').text();
         $("#input-estado").val(estado);
         
+        $("#sucursal").parent().attr("hidden", "hidden");
         $("#contraseña").attr("hidden", "hidden");
         $("#label-contraseña").attr("hidden", "hidden");
         $("#input-estado").removeAttr("hidden");

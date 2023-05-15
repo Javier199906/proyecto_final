@@ -1,13 +1,12 @@
 <?php
     session_start();
     if (!isset($_SESSION['usuario'])) header('Location: login.php');
-    if ($_SESSION['rol'] != 1) header('Location: index.php');
 
     include_once '../clases/conexion.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
 
-    $query = $conexion->query("SELECT * FROM productos WHERE estado=1 AND sucursal=" . $_SESSION['sucursal']);
+    $query = $conexion->query("SELECT * FROM ciudades ");
 ?>
 
 <!Doctype html>
@@ -16,8 +15,8 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Compras</title>
-
+        <title>Sucursales</title>
+        
         <link href="../assets/fonts/icon.css" rel="stylesheet" />
 
         <link href="../css/styles.css" rel="stylesheet" />
@@ -25,9 +24,7 @@
         
         <link href="../assets/datatables/datatables.min.css" rel="stylesheet" />
         <link href="../assets/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-
-        <link href="../assets/select2/select2.min.css" rel="stylesheet" />
-
+        
         <style type="text/css">  
             input[type=number]::-webkit-inner-spin-button, 
             input[type=number]::-webkit-outer-spin-button { 
@@ -37,10 +34,6 @@
             
             input[type=number] { 
                 -moz-appearance: textfield; 
-            }
-
-            #tabla tr > *:nth-child(2) {
-                display: none;
             }
         </style>
     </head>
@@ -169,50 +162,20 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Compras</h1>
-
-                        <form id="form">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <select class="form-select form-select-lg mb-3" id="producto">
-                                        <option value="0">Producto</option>
-                                        <?php
-                                        foreach ($query as $row){
-                                            ?>
-                                            <option value="<?=$row['id']?>"><?=$row['nombre']?> - <?=$row['descripcion']?></option>
-                                            <?php
-                                        }
-
-                                        $query = $conexion->query("SELECT p.id, p.nombre, p.direccion, c.nombre AS ciudad FROM proveedores p, ciudades c WHERE p.ciudad=c.id AND p.estado=1 ");
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="precio-compra" type="number" placeholder="Precio de Compra" autocomplete="off" />
-                                        <label for="precio-compra">Precio de Compra</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="cantidad" type="number" placeholder="Cantidad" autocomplete="off" />
-                                        <label for="cantidad">Cantidad</label>
-                                    </div>
+                        <h1 class="mt-4">Sucursales</h1>
+                        <br>
+                        <div>
+                            <div class="row">
+                                <div>         
+                                    <button id="btnNuevo" type="button" class="btn btn-primary" data-toggle="modal">Nuevo</button>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-10"></div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-danger" type="button" id="btnLimpiar">Limpiar</button>
-                                    <button class="btn btn-primary" type="submit" id="btnAgregar">Agregar</button>
-                                </div>
-                            </div>
-                        </form>
-
+                        </div>
+                        <br>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-cart-plus"></i>
-                                Lista de la Compra
+                                <i class="fas fa-store"></i>
+                                Sucursales Registradas
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -220,12 +183,9 @@
                                         <thead class="text-center">
                                             <tr>
                                                 <th>Id</th>
-                                                <th>Id Producto</th>
-                                                <th>Producto</th>
-                                                <th>Descripcion</th>
-                                                <th>P.Compra</th>
-                                                <th>Cantidad</th>
-                                                <th>Total</th>
+                                                <th>Nombre</th>
+                                                <th>Direccion</th>
+                                                <th>Ciudad</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
@@ -236,45 +196,63 @@
                                 </div>
                             </div>
                         </div>
-
-                        <form id="form2">
-                            <div class="row mb-3">
-                                <div class="col-md-10">
-                                    <select class="form-select form-select-lg mb-3" id="proveedor">
-                                        <option value="0">Proveedor</option>
-                                        <?php
-                                        foreach ($query as $row){
-                                            ?>
-                                            <option value="<?=$row['id']?>"><?=$row['nombre']?> - <?=$row['direccion']?> <?=$row['ciudad']?></option>
-                                            <?php
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="total" type="number" placeholder="Total" autocomplete="off" disabled />
-                                        <label for="total">Total</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-10"></div>
-                                <div class="col-md-2">
-                                    <button type="button" id="btnCancelar" class="btn btn-danger">Cancelar</button>
-                                    <button type="submit" id="btnComprar" class="btn btn-primary">Comprar</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            
+                         
                         </div>
                     </div>
                 </footer>
+            </div>
+        </div>
+
+        <!--Modal para CRUD-->
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="form">
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="nombre" type="text" placeholder="Nombre" autocomplete="off" />
+                                        <label for="nombre">Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="direccion" type="text" placeholder="Direccion" autocomplete="off" />
+                                        <label for="cp">Direccion</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <select class="form-select" id="ciudad">
+                                        <option value="0">Ciudad</option>
+                                        <?php
+                                        foreach ($query as $row){
+                                            ?>
+                                            <option value="<?=$row['id']?>"><?=$row['nombre']?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     
@@ -283,8 +261,7 @@
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     
     <script src="../assets/datatables/datatables.min.js"></script>
-    <script src="../assets/select2/select2.min.js"></script>
-    <script src="../js/compras.js"></script>
+    <script src="../js/sucursales.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../assets/fontawesome/all.min.js"></script>

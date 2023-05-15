@@ -97,6 +97,16 @@
                             <?php
                                 if($_SESSION['rol'] == 1){
                             ?>
+                            <a class="nav-link" href="sucursales.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
+                                Sucursales
+                            </a>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if($_SESSION['rol'] == 1){
+                            ?>
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios

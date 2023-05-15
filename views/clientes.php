@@ -107,6 +107,16 @@
                             <?php
                                 if($_SESSION['rol'] == 1){
                             ?>
+                            <a class="nav-link" href="sucursales.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
+                                Sucursales
+                            </a>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if($_SESSION['rol'] == 1){
+                            ?>
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios
@@ -263,7 +273,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-6 d-grid">
                                     <select class="form-select" id="ciudad">
                                         <option value="0">Ciudad</option>
                                         <?php

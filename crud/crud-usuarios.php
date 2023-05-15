@@ -1,6 +1,6 @@
 <?php
 session_start();
-$sucursal = $_SESSION['sucursal'];
+$sucursalSesion = $_SESSION['sucursal'];
 include_once '../clases/conexion.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
@@ -12,6 +12,7 @@ $telefono = (isset($_POST['telefono'])) ? $_POST['telefono'] : '';
 $fecha_nacimiento = (isset($_POST['fecha_nacimiento'])) ? $_POST['fecha_nacimiento'] : '';
 $direccion = (isset($_POST['direccion'])) ? $_POST['direccion'] : '';
 $ciudad = (isset($_POST['ciudad'])) ? $_POST['ciudad'] : '';
+$sucursal = (isset($_POST['sucursal'])) ? $_POST['sucursal'] : '';
 $username = (isset($_POST['username'])) ? $_POST['username'] : '';
 $contraseña = (isset($_POST['contraseña'])) ? $_POST['contraseña'] : '';
 
@@ -57,7 +58,7 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         
-        $consulta = "SELECT * FROM usuarios_v WHERE  sucursal=$sucursal ORDER BY id DESC LIMIT 1 ";
+        $consulta = "SELECT * FROM usuarios_v WHERE  sucursal=$sucursalSesion ORDER BY id DESC LIMIT 1 ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -70,8 +71,14 @@ switch($opcion){
         $consulta = "UPDATE usuarios SET username='$username', rol=$rol, estado=$estado WHERE id='$id_usuario' ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
+
+        /*
+        $consulta = "UPDATE usuarios_sucursales SET sucursal = '$sucursal' WHERE id='$id_usuario' ";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        */
         
-        $consulta = "SELECT * FROM usuarios_v WHERE  sucursal=$sucursal AND id_usuario='$id_usuario' ";
+        $consulta = "SELECT * FROM usuarios_v WHERE  sucursal=$sucursalSesion AND id_usuario='$id_usuario' ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -97,7 +104,7 @@ switch($opcion){
         break;
         */
     case 4:
-        $consulta = "SELECT * FROM usuarios_v WHERE sucursal=$sucursal ";
+        $consulta = "SELECT * FROM usuarios_v WHERE sucursal=$sucursalSesion ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -123,7 +130,7 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
             
-        $consulta = "SELECT * FROM usuarios_v WHERE  sucursal=$sucursal AND id_usuario='$id_usuario' ";
+        $consulta = "SELECT * FROM usuarios_v WHERE  sucursal=$sucursalSesion AND id_usuario='$id_usuario' ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);

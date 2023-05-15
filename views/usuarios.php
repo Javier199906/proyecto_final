@@ -108,6 +108,16 @@
                             <?php
                                 if($_SESSION['rol'] == 1){
                             ?>
+                            <a class="nav-link" href="sucursales.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
+                                Sucursales
+                            </a>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if($_SESSION['rol'] == 1){
+                            ?>
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios
@@ -188,6 +198,7 @@
                                                 <th>F.Nacimiento</th>
                                                 <th>Direccion</th>
                                                 <th>Ciudad</th>
+                                                <!-- <th>Sucursal</th> -->
                                                 <th>Rol</th>
                                                 <th>Estado</th>
                                                 <th>Acciones</th>
@@ -264,10 +275,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 mb-3 d-grid">
                                     <select class="form-select" id="ciudad">
                                         <option value="0">Ciudad</option>
+                                        <?php
+                                        foreach ($query as $row){
+                                            ?>
+                                            <option value="<?=$row['id']?>"><?=$row['nombre']?></option>
+                                            <?php
+                                        }
+
+                                        $query = $conexion->query("SELECT * FROM sucursales ");
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3 d-grid">
+                                    <select class="form-select" id="sucursal">
+                                        <option value="0">Sucursal</option>
                                         <?php
                                         foreach ($query as $row){
                                             ?>
@@ -279,22 +304,20 @@
                                         ?>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <input class="form-control" id="nombre-usuario" type="text" placeholder="Nombre de Usuario" autocomplete="off" />
                                         <label for="nombre-usuario">Nombre de Usuario</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating mb-3 mb-md-0 d-grid">
                                         <input class="form-control" id="contraseña" type="password" placeholder="Contraseña" autocomplete="off" />
                                         <label for="contraseña" id="label-contraseña">Contraseña</label>
                                         <button id="btnPassword" type="button" class="btn btn-danger" data-toggle="modal-password">Reestablecer Contraseña</button>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3 d-grid">
                                     <select class="form-select" id="rol">
                                         <option value="0">Rol</option>
                                         <?php
@@ -306,9 +329,7 @@
                                         ?>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <input class="form-control" id="input-estado" type="number" placeholder="Estado" autocomplete="off" />
                                         <label for="input-estado" id="label-estado">Estado</label>
