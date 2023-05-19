@@ -18,30 +18,32 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         ?>
-        <table class="table">
-            <thead>
-                <th hidden>Id</th>
-                <th>Producto</th>
-                <th>Descripcion</th>
-                <th>P.Unitario</th>
-                <th>Cantidad</th>
-                <th>Importe</th>
-            </thead>
-            <tbody>
-                    <?php
-                    foreach($resultado as $row){
-                        echo "<tr>";
-                        echo "<td hidden>". $row["id"] ."</td>";
-                        echo "<td>". $row["producto"] ."</td>";
-                        echo "<td>". $row["descripcion"] ."</td>";
-                        echo "<td>". $row["precio_unitario"] ."</td>";
-                        echo "<td>". $row["cantidad"] ."</td>";
-                        echo "<td>". $row["importe"] ."</td>";
-                        echo "</tr>";
-                    }
-                    ?>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table" style="width:100%">
+                <thead>
+                    <th hidden>Id</th>
+                    <th>Producto</th>
+                    <th>Descripcion</th>
+                    <th>P.Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Importe</th>
+                </thead>
+                <tbody>
+                        <?php
+                        foreach($resultado as $row){
+                            echo "<tr>";
+                            echo "<td hidden>". $row["id"] ."</td>";
+                            echo "<td>". $row["producto"] ."</td>";
+                            echo "<td>". $row["descripcion"] ."</td>";
+                            echo "<td>". $row["precio_unitario"] ."</td>";
+                            echo "<td>". $row["cantidad"] ."</td>";
+                            echo "<td>". $row["importe"] ."</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                </tbody>
+            </table>
+        </div>
         <?php
         exit();
         break;

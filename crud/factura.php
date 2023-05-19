@@ -87,7 +87,11 @@
     <script>
         function imprimir(){
             window.print();
-            window.close();
+
+            /** A MI ME FUNCIONA CON ESTO, SINO TE FUNCIONA SOLO COMENTALO **/
+            setInterval(() => {
+                window.close();
+            }, 1000);
         }
     </script>
 </body>

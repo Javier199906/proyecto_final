@@ -192,7 +192,7 @@
                                                         <label for="fecha-fin-c">Hasta</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <button class="btn btn-primary" type="submit" id="btnGenerar-c">Generar</button>
                                                     <button class="btn btn-danger" type="button" id="btnLimpiar-c">Limpiar</button>
                                                 </div>
@@ -253,7 +253,7 @@
                                                         <label for="fecha-fin-v">Hasta</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <button class="btn btn-primary" type="submit" id="btnGenerar-v">Generar</button>
                                                     <button class="btn btn-danger" type="button" id="btnLimpiar-v">Limpiar</button>
                                                 </div>

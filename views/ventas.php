@@ -200,8 +200,8 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-10"></div>
-                                <div class="col-md-2">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3 text-end">
                                     <button class="btn btn-danger" type="button" id="btnLimpiar">Limpiar</button>
                                     <button class="btn btn-primary" type="submit" id="btnAgregar">Agregar</button>
                                 </div>
@@ -270,8 +270,8 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-10"></div>
-                                <div class="col-md-2">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3 text-end">
                                     <button class="btn btn-danger" id="btnCancelar" type="button">Cancelar</button>
                                     <button class="btn btn-primary" id="btnVender" type="submit">Vender</button>
                                 </div>
